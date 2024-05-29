@@ -1,0 +1,15 @@
+{
+	"name": "chrisowensdev/fiassist",
+	"description": "Assistant application",
+	"authors": [
+		{
+			"name": "Chris Owens"
+		}
+	],
+	"autoload": {
+		"psr-4": {
+			"Framework\\": "Framework/",
+			"App\\": "App/"
+		}
+	}
+}
