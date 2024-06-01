@@ -2,6 +2,9 @@
 
 namespace Framework;
 
+use App\Controllers\HomeController;
+use App\Controllers\ErrorController;
+
 class Router
 {
     protected $routes = [];
@@ -120,6 +123,7 @@ class Router
 
                 if ($match) {
                     // Extract controller and controller method
+
                     $controller = 'App\\Controllers\\' . $route['controller'];
                     $controllerMethod = $route['controllerMethod'];
 
@@ -129,5 +133,7 @@ class Router
                 }
             }
         }
+
+        ErrorController::notFound();
     }
 }

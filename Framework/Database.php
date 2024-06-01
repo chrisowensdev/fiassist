@@ -25,4 +25,19 @@ class Database
             throw new Exception("Database connection failed: {$e->getMessage()}");
         }
     }
+    
+    public function query($query, $params = []){
+        try {
+            $stmt = $this->conn->prepare($query);
+            
+            foreach ($params as $param => $value) {
+                $stmt->bindValue(':' . $param, $value);
+            }
+            
+            $stmt->execute();
+            return $stmt;
+        } catch (PDOException $e) {
+            throw new Exception("Query failed to execute: {$e->getMessage()}");
+        }
+    }
 }
