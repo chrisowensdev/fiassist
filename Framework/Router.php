@@ -2,7 +2,6 @@
 
 namespace Framework;
 
-use App\Controllers\HomeController;
 use App\Controllers\ErrorController;
 
 class Router
