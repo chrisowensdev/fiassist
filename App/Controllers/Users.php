@@ -5,7 +5,6 @@ namespace App\Controllers;
 use Framework\Controller;
 use Framework\Database;
 
-// Test hostinger deployment
 class Users extends Controller
 {
     protected $userModel;
