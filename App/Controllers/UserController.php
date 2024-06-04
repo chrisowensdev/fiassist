@@ -5,7 +5,7 @@ namespace App\Controllers;
 use Framework\Controller;
 use Framework\Database;
 
-class Users extends Controller
+class UserController extends Controller
 {
     protected $userModel;
 
@@ -14,9 +14,13 @@ class Users extends Controller
         $this->userModel = $this->model('User');
     }
 
-    public function index()
+    /**
+     * Show the login page
+     * 
+     * @return void
+     */
+    public function login()
     {
-        $this->userModel->getUserByEmail('chris@chris.com');
         loadView('users/login');
     }
 }
