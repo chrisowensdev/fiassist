@@ -54,3 +54,9 @@ function inspectAndDie($value)
     die(var_dump($value));
     echo '</pre>';
 }
+
+function redirect($url)
+{
+    header("Location: {$url}");
+    exit;
+}
