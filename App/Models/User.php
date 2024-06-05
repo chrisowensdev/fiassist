@@ -50,7 +50,11 @@ class User
             'email' => $email
         ];
 
-        $user = $this->db->query('SELECT * FROM user WHERE email = :email', $params);
+        $query = '
+        SELECT * FROM user 
+        WHERE email = :email';
+
+        $user = $this->db->query($query, $params);
         $user = $user->fetch();
 
         if ($user) {
@@ -89,6 +93,69 @@ class User
         $response = [
             'data' => [
                 'id' => $userId,
+                'email' => $email
+            ]
+        ];
+
+
+        return $response;
+    }
+
+    public function loginUser()
+    {
+        $email = $_POST['email'];
+        $password = $_POST['password'];
+
+        $errors = [];
+
+        // Validation
+        if (!Validation::email($email)) {
+            $errors['email'] = 'Please enter a valid email';
+        }
+
+        if (!Validation::string($password, 6)) {
+            $errors['password'] = 'Password must be at least 6 characters';
+        }
+
+        if ($errors) {
+            $response = [
+                'errors' => $errors,
+                'data' => [
+                    'email' => $email
+                ]
+            ];
+
+            return $response;
+        }
+
+        // Check for email
+        $params = [
+            'email' => $email
+        ];
+
+        $query = '
+        SELECT * FROM user
+        WHERE email = :email
+        ';
+
+        $user = $this->db->query($query, $params);
+        $user = $user->fetch();
+
+        if (!$user || !password_verify($password, $user->password)) {
+            $errors['email'] = 'Incorrect credentials';
+            $response = [
+                'errors' => $errors,
+                'data' => [
+                    'email' => $email
+                ]
+            ];
+
+            return $response;
+        }
+
+        $response = [
+            'data' => [
+                'id' => $user->id,
                 'email' => $email
             ]
         ];
