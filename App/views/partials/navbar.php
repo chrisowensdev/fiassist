@@ -9,13 +9,16 @@ use Framework\Session;
             <a href="/">FiAssist</a>
         </h1>
         <nav class="space-x-4">
-            <!-- <div class="flex justify-between items-center gap-4">
-                <form method="POST" action="/auth/logout">
-                    <button type="submit" class="text-white inline hover:underline">Logout</button>
-                </form>
-            </div> -->
-            <a href="/auth/login" class="text-white hover:underline">Login</a>
-            <a href="/auth/register" class="text-white hover:underline">Register</a>
+            <?php if (Session::has('user')) : ?>
+                <div class="flex justify-between items-center gap-4">
+                    <form method="POST" action="/auth/logout">
+                        <button type="submit" class="text-white inline hover:underline">Logout</button>
+                    </form>
+                </div>
+            <?php else : ?>
+                <a href="/auth/login" class="text-white hover:underline">Login</a>
+                <a href="/auth/register" class="text-white hover:underline">Register</a>
+            <?php endif; ?>
         </nav>
     </div>
 </header>

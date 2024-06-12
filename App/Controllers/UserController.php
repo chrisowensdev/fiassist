@@ -58,8 +58,74 @@ class UserController extends Controller
         redirect('/');
     }
 
-    /** Authenticate user */
+    /**
+     * Logout a user and kill session
+     * 
+     * @return void
+     */
+    public function logout()
+    {
+        Session::clearAll();
+
+        $params = session_get_cookie_params();
+        setcookie('PHPSESSID', '', time() - 86400, $params['path'], $params['domain']);
+
+        redirect('/');
+    }
+
+    /** 
+     * Authenticate a user with email and password
+     * 
+     * @return void 
+     */
     public function authenticate()
     {
+        $response = $this->userModel->loginUser();
+
+        if (isset($response['errors'])) {
+            loadView('users/login', [
+                'errors' => $response['errors'],
+                'data' => $response['data']
+            ]);
+            exit;
+        }
+
+        Session::set('user', [
+            'id' => $response['data']['id'],
+            'email' => $response['data']['email']
+        ]);
+        redirect('/');
+    }
+
+    /**
+     * Get user profile
+     *
+     * @return void
+     */
+    public function profile()
+    {
+        $user = Session::get('user');
+
+        $response = $this->userModel->getUserById($user['id']);
+
+        loadView('users/profile', [
+            'data' => $response
+        ]);
+    }
+
+    /**
+     * Update user profile
+     * 
+     * @return void
+     */
+    public function updateProfile()
+    {
+        $user = Session::get('user');
+
+        $response = $this->userModel->updateProfile($user['id']);
+
+        loadView('users/profile', [
+            'data' => $response
+        ]);
     }
 }
