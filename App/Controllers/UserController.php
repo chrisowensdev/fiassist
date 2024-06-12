@@ -82,7 +82,7 @@ class UserController extends Controller
     {
         $response = $this->userModel->loginUser();
 
-        if ($response['errors']) {
+        if (isset($response['errors'])) {
             loadView('users/login', [
                 'errors' => $response['errors'],
                 'data' => $response['data']
@@ -91,10 +91,41 @@ class UserController extends Controller
         }
 
         Session::set('user', [
-            'id' => $response['id'],
-            'email' => $response['email']
+            'id' => $response['data']['id'],
+            'email' => $response['data']['email']
         ]);
-
         redirect('/');
+    }
+
+    /**
+     * Get user profile
+     *
+     * @return void
+     */
+    public function profile()
+    {
+        $user = Session::get('user');
+
+        $response = $this->userModel->getUserById($user['id']);
+
+        loadView('users/profile', [
+            'data' => $response
+        ]);
+    }
+
+    /**
+     * Update user profile
+     * 
+     * @return void
+     */
+    public function updateProfile()
+    {
+        $user = Session::get('user');
+
+        $response = $this->userModel->updateProfile($user['id']);
+
+        loadView('users/profile', [
+            'data' => $response
+        ]);
     }
 }

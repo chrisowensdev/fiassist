@@ -21,7 +21,7 @@ class Users extends Controller
 
     public function index()
     {
-        $user = $this->userModel->getUserByEmail('chris@chris.com');
+        $user = $this->userModel->getUserByEmail('chris@gmail.com');
         http_response_code(200);
         echo json_encode($user);
     }

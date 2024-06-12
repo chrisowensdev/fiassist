@@ -164,13 +164,116 @@ class User
         return $response;
     }
 
+
+    /**
+     * Get user by id
+     * 
+     * @param int $id
+     * @return mixed
+     */
+
+    public function getUserById($id)
+    {
+        $params = [
+            'id' => $id
+        ];
+
+        $query = '
+            SELECT 
+                  id
+                , email
+                , first_name
+                , last_name 
+            FROM user 
+            WHERE id = :id
+        ';
+
+        $user = $this->db->query($query, $params)->fetch();
+        return $user;
+    }
+
+    /**
+     * Get user by email
+     * 
+     * @param string $email
+     * @return mixed
+     */
+
     public function getUserByEmail($email)
     {
         $params = [
             'email' => $email
         ];
 
-        $user = $this->db->query('SELECT * FROM user WHERE email = :email', $params)->fetch();
+        $query = '
+            SELECT 
+                  id
+                , email
+                , first_name
+                , last_name 
+            FROM user 
+            WHERE email = :email
+        ';
+
+        $user = $this->db->query($query, $params)->fetch();
+
+        return $user;
+    }
+
+    /**
+     * Update profile
+     *
+     * @return void
+     */
+
+    public function updateProfile($id)
+    {
+        $email = $_POST['email'];
+        $first_name = $_POST['first_name'];
+        $last_name = $_POST['last_name'];
+
+        $errors = [];
+
+        // Validation
+        if (!Validation::email($email)) {
+            $errors['email'] = 'Please enter a valid email';
+        }
+
+        if ($errors) {
+            $response = [
+                'errors' => $errors,
+                'data' => [
+                    'email' => $email,
+                    'first_name' => $first_name,
+                    'last_name' => $last_name
+                ]
+            ];
+
+            return $response;
+        }
+
+        // Update user account
+        $params = [
+            'id' => $id,
+            'email' => $email,
+            'first_name' => $first_name,
+            'last_name' => $last_name
+        ];
+
+        $query = '
+        UPDATE user
+        SET   email = :email
+            , first_name = :first_name
+            , last_name = :last_name
+            
+        WHERE
+              id = :id
+        ';
+
+        $this->db->query($query, $params);
+
+        $user = $this->getUserById($id);
+
         return $user;
     }
 }
