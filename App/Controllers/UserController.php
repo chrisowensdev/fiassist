@@ -122,7 +122,7 @@ class UserController extends Controller
     {
         $user = Session::get('user');
 
-        $response = $this->userModel->updateProfile($user['id']);
+        $response = $this->userModel->updateProfile($user['id'], $_POST);
 
         loadView('users/profile', [
             'data' => $response
