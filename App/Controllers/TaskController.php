@@ -16,7 +16,13 @@ class TaskController extends Controller
 
     public function index()
     {
-        inspectAndDie('Get Tasks');
+        $user = Session::get('user');
+
+        $response = $this->taskModel->getTasksByOwnerId($user['id']);
+
+        loadView('tasks/index', [
+            'tasks' => $response['data']
+        ]);
     }
 
     public function create()
@@ -30,6 +36,8 @@ class TaskController extends Controller
 
         $input = $_POST;
 
-        $response = $this->taskModel->createTask($user['id'], $input);
+        $this->taskModel->createTask($user['id'], $input);
+
+        redirect('/tasks');
     }
 }

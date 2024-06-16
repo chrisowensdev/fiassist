@@ -13,7 +13,11 @@ class Task
         $this->db = new Database($config);
     }
 
-    public function getTasks($owner_id)
+    public function getTasksByUserGroupId(int $user_group_id)
+    {
+    }
+
+    public function getTasksByOwnerId(int $owner_id)
     {
         $params = [
             'owner_id' => $owner_id
@@ -24,7 +28,13 @@ class Task
         WHERE owner_id = :owner_id';
 
         $user = $this->db->query($query, $params);
-        $user = $user->fetch();
+        $user = $user->fetchAll();
+
+        $response = [
+            'data' => $user
+        ];
+
+        return $response;
     }
 
     public function createTask($owner_id, array $input, $user_group_id = NULL)
