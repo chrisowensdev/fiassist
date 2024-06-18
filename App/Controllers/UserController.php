@@ -94,7 +94,13 @@ class UserController extends Controller
             'id' => $response['data']['id'],
             'email' => $response['data']['email']
         ]);
-        redirect('/');
+
+        redirect(('/user'));
+    }
+
+    public function index()
+    {
+        loadView('/users/index');
     }
 
     /**
