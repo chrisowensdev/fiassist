@@ -94,7 +94,13 @@ class UserController extends Controller
             'id' => $response['data']['id'],
             'email' => $response['data']['email']
         ]);
-        redirect('/');
+
+        redirect(('/user'));
+    }
+
+    public function index()
+    {
+        loadView('/users/index');
     }
 
     /**
@@ -122,7 +128,7 @@ class UserController extends Controller
     {
         $user = Session::get('user');
 
-        $response = $this->userModel->updateProfile($user['id']);
+        $response = $this->userModel->updateProfile($user['id'], $_POST);
 
         loadView('users/profile', [
             'data' => $response

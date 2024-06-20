@@ -1,18 +1,10 @@
 <?php
 
-use Framework\Database;
+use Framework\Model;
 use Framework\Validation;
 
-class User
+class User extends Model
 {
-    protected $db;
-
-    public function __construct()
-    {
-        $config = require basePath('config/db.php');
-        $this->db = new Database($config);
-    }
-
     public function registerUser()
     {
         $email = $_POST['email'];
@@ -221,18 +213,20 @@ class User
     }
 
     /**
-     * Update profile
+     * Undocumented function
      *
+     * @param int $id
+     * @param array $input
      * @return void
      */
-
-    public function updateProfile($id)
+    public function updateProfile($id, array $input)
     {
-        $email = $_POST['email'];
-        $first_name = $_POST['first_name'];
-        $last_name = $_POST['last_name'];
+        $email = $input['email'];
+        $first_name = $input['first_name'];
+        $last_name = $input['last_name'];
 
         $errors = [];
+        $response = [];
 
         // Validation
         if (!Validation::email($email)) {
@@ -274,6 +268,11 @@ class User
 
         $user = $this->getUserById($id);
 
-        return $user;
+        $response = [
+            'errors' => $errors,
+            'data' => $user
+        ];
+
+        return $response;
     }
 }
