@@ -40,4 +40,11 @@ class TaskController extends Controller
 
         redirect('/tasks');
     }
+
+    public function delete($params)
+    {
+        $this->taskModel->deleteTask($params);
+
+        redirect('/tasks');
+    }
 }

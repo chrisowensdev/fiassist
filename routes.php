@@ -11,6 +11,7 @@ $router->post('/auth/login', 'UserController@authenticate');
 $router->get('/tasks', 'TaskController@index');
 $router->get('/tasks/create', 'TaskController@create');
 $router->post('/tasks/create', 'TaskController@store');
+$router->delete('/tasks/delete/{id}', 'TaskController@delete');
 
 $router->get('/user', 'UserController@index');
 $router->get('/user/profile', 'UserController@profile');

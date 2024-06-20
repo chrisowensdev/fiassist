@@ -151,8 +151,7 @@
                 <div class="offcanvas-body d-md-flex flex-column p-0 pt-lg-3 overflow-y-auto">
                     <ul class="nav flex-column">
                         <li class="nav-item">
-                            <?php inspectAndDie($data) ?>
-                            <a class="nav-link d-flex align-items-center gap-2 <?= $data->screen === "dashboard" ? "bg-primary text-white" : ""; ?>" aria-current="page" href="/user">
+                            <a class="nav-link d-flex align-items-center gap-2 <?= $data['screen'][0] === "dashboard" ? "bg-primary text-white" : ""; ?>" aria-current="page" href="/user">
                                 <svg class="bi">
                                     <use xlink:href="#house-fill" />
                                 </svg>
@@ -160,7 +159,7 @@
                             </a>
                         </li>
                         <li class="nav-item bg-light">
-                            <a class="nav-link d-flex align-items-center gap-2 <?= $data->screen === "task" ? "bg-primary text-white" : ""; ?>" href="/tasks">
+                            <a class="nav-link d-flex align-items-center gap-2 <?= $data['screen'][0] === "task" ? "bg-primary text-white" : ""; ?>" href="/tasks">
                                 <svg class="bi">
                                     <use xlink:href="#clipboard" />
                                 </svg>

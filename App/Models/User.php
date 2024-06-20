@@ -1,18 +1,10 @@
 <?php
 
-use Framework\Database;
+use Framework\Model;
 use Framework\Validation;
 
-class User
+class User extends Model
 {
-    protected $db;
-
-    public function __construct()
-    {
-        $config = require basePath('config/db.php');
-        $this->db = new Database($config);
-    }
-
     public function registerUser()
     {
         $email = $_POST['email'];
