@@ -20,7 +20,19 @@ class Model
      * @param array $errors
      * @return void
      */
-    public function response(int $statusCode, string $message, array $data = [], array $errors = [])
+    public function responseList(int $statusCode, string $message, $data = [], array $errors = [])
+    {
+        $response = [
+            'data' => $data,
+            'status' => $statusCode,
+            'message' => $message,
+            'errors' => $errors
+        ];
+
+        return $response;
+    }
+
+    public function response(int $statusCode, string $message, object $data, array $errors = [])
     {
         $response = [
             'data' => $data,

@@ -43,35 +43,32 @@
                     <p><?= $task->description ?></p>
                 <?php endif; ?>
             </div>
-            <div class="col-md-8">
-                <label for="inputAddress2" class="form-label">Address 2</label>
-                <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor" readonly>
-            </div>
-            <div class="col-md-3">
-                <label for="inputCity" class="form-label">City</label>
-                <input type="text" class="form-control" id="inputCity" readonly>
-            </div>
             <div class="col-md-3">
                 <label for="inputState" class="form-label">Frequency</label>
-                <select id="inputState" class="form-select">
-                    <option selected>Weekly</option>
+                <select id="inputState" class="form-select" name="frequency">
+                    <option value="DAILY" selected>Daily</option>
+                    <option value="WEEKLY">Weekly</option>
+                    <option value="MONTHLY">Monthly</option>
+                </select>
+            </div>
+
+            <div class="col-md-4">
+                <label for="inputState" class="form-label">Group</label>
+                <select id="inputState" class="form-select" name="user_group_id">
+                    <option selected value="1">Current Group</option>
                     <option>...</option>
                 </select>
             </div>
-            <div class="col-md-3">
-                <label for="inputZip" class="form-label">Zip</label>
-                <input type="text" class="form-control" id="inputZip">
-            </div>
             <div class="col-md-4">
-                <label for="inputState" class="form-label">Group</label>
-                <select id="inputState" class="form-select">
-                    <option selected>Choose...</option>
-                    <option>...</option>
+                <label for="inputState" class="form-label">Assign</label>
+                <select id="inputState" class="form-select" name="status">
+                    <option selected value="INITIAL">Unassigned</option>
+                    <option value="ASSIGNED">Myself</option>
                 </select>
             </div>
             <div class="col-12">
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="gridCheck">
+                    <input class="form-check-input" type="checkbox" id="gridCheck" value="PRIVATE" name="private">
                     <label class="form-check-label" for="gridCheck">
                         Private?
                     </label>
