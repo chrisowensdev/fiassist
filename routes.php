@@ -8,6 +8,8 @@ $router->post('/auth/register', 'UserController@store');
 $router->get('/auth/logout', 'UserController@logout');
 $router->post('/auth/login', 'UserController@authenticate');
 
+$router->get('/bills', 'BillController@index');
+
 $router->get('/tasks', 'TaskController@index');
 $router->get('/tasks/group', 'TaskController@group');
 

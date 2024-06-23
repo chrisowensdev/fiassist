@@ -59,7 +59,7 @@
 </svg>
 
 <header class="navbar sticky-top bg-dark flex-md-nowrap p-0 shadow" data-bs-theme="dark">
-    <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6 text-white" href="#">FiAssist</a>
+    <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6 text-white" href="/user">FiAssist</a>
 
     <ul class="navbar-nav flex-row d-md-none">
         <li class="nav-item text-nowrap">
@@ -110,7 +110,7 @@
                             </a>
                         </li>
                         <li class="nav-item bg-light">
-                            <a class="nav-link d-flex align-items-center gap-2 <?= $data['screen'][0] === "bill" ? "bg-primary text-white" : ""; ?>" href="/tasks">
+                            <a class="nav-link d-flex align-items-center gap-2 <?= $data['screen'][0] === "bill" ? "bg-primary text-white" : ""; ?>" href="/bills">
                                 <svg class="bi">
                                     <use xlink:href="#cash" />
                                 </svg>
