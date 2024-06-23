@@ -8,7 +8,7 @@ class Task extends Model
      * Get Tasks By Owner Id
      *
      * @param integer $owner_id
-     * @return void
+     * @return array
      */
     public function getTasksByOwnerId(int $owner_id)
     {
@@ -28,25 +28,97 @@ class Task extends Model
         return $response;
     }
 
+    public function getTaskById(array $params)
+    {
+        $params = [
+            'id' => $params['id']
+        ];
+
+        $query = "
+        SELECT * FROM task 
+        WHERE id = :id";
+
+        $tasks = $this->db->query($query, $params);
+        $tasks = $tasks->fetchAll();
+
+        $response = $this->response(200, '', $tasks);
+
+        return $response;
+    }
+
+    public function getCompletedTaskByUserId($user_id)
+    {
+        $assigned_to_id = $user_id;
+
+        $params = [
+            'assigned_to_id' => $assigned_to_id,
+            'status' => 'COMPLETE'
+        ];
+
+        $query = '
+        SELECT * FROM task 
+        WHERE assigned_to_id = :assigned_to_id
+        AND status = :status';
+
+        $tasks = $this->db->query($query, $params);
+        $tasks = $tasks->fetchAll();
+
+        $response = $this->response(200, '', $tasks);
+
+        return $response;
+    }
+
+    public function getTodoTaskByAssignedId($user_id)
+    {
+        $assigned_to_id = $user_id;
+
+        $params = [
+            'assigned_to_id' => $assigned_to_id,
+            'status' => 'ASSIGNED'
+        ];
+
+        $query = '
+        SELECT * FROM task 
+        WHERE assigned_to_id = :assigned_to_id
+        AND status = :status';
+
+        $tasks = $this->db->query($query, $params);
+        $tasks = $tasks->fetchAll();
+
+        $response = $this->response(200, '', $tasks);
+
+        return $response;
+    }
+
     /**
      * Create task
      *
      * @param integer $owner_id
      * @param array $input
-     * @return void
+     * @return array
      */
     public function createTask(int $owner_id, array $input)
     {
         $title = $input['title'];
         $description = $input['description'];
         $user_group_id = $input['user_group_id'];
+        $frequency = $input['frequency'];
+        $status = $input['status'];
+        $assigned_to_id = NULL;
+
+        if ($status === 'ASSIGNED') {
+            $assigned_to_id = $owner_id;
+        }
 
         // Create task
         $params = [
             'title' => $title,
             'description' => $description,
             'owner_id' => $owner_id,
-            'user_group_id' => $user_group_id
+            'user_group_id' => $user_group_id,
+            'frequency' => $frequency,
+            'status' => $status,
+            'assigned_to_id' => $assigned_to_id
         ];
 
         $query = '
@@ -54,12 +126,18 @@ class Task extends Model
               title
             , description
             , owner_id
-            , user_group_id)
+            , user_group_id
+            , frequency
+            , status
+            , assigned_to_id)
         VALUES (
               :title
             , :description
             , :owner_id
-            , :user_group_id)
+            , :user_group_id
+            , :frequency
+            , :status
+            , :assigned_to_id)
         ';
 
         $this->db->query($query, $params);
@@ -102,7 +180,29 @@ class Task extends Model
         return $response;
     }
 
-    public function completeTask(array $params)
+    public function completeTask(array $params, $input)
     {
+        $id = $params['id'];
+
+        $status = $input['status'];
+
+        $params = [
+            'id' => $id,
+            'status' => $status
+        ];
+
+        $query = "
+        UPDATE task
+        SET status = :status
+        WHERE id = :id
+        ";
+
+        $this->db->query($query, $params);
+
+        $message = 'Task updated successfully';
+
+        $response = $this->response(201, $message);
+
+        return $response;
     }
 }
