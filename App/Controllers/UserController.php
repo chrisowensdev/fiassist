@@ -8,10 +8,12 @@ use Framework\Session;
 class UserController extends Controller
 {
     protected $userModel;
+    protected $taskModel;
 
     public function __construct()
     {
         $this->userModel = $this->model('User');
+        $this->taskModel = $this->model('Task');
     }
 
     /**
@@ -51,11 +53,11 @@ class UserController extends Controller
         }
 
         Session::set('user', [
-            'id' => $response['id'],
-            'email' => $response['email']
+            'id' => $response['data']['id'],
+            'email' => $response['data']['email']
         ]);
 
-        redirect('/');
+        redirect('/user');
     }
 
     /**
@@ -100,7 +102,14 @@ class UserController extends Controller
 
     public function index()
     {
-        loadView('/users/index');
+        $user = Session::get('user');
+
+        $currentTasksCount = $this->taskModel->getAssignedTaskByUserIdCount($user['id']);
+
+        // inspectAndDie($currentTasksCount['data']);
+        loadView('/users/index', [
+            'currentTaskCount' => $currentTasksCount['data']->COUNT
+        ]);
     }
 
     /**

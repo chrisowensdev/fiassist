@@ -23,7 +23,7 @@ class Task extends Model
         $tasks = $this->db->query($query, $params);
         $tasks = $tasks->fetchAll();
 
-        $response = $this->response(200, '', $tasks);
+        $response = $this->responseList(200, '', $tasks);
 
         return $response;
     }
@@ -41,7 +41,7 @@ class Task extends Model
         $tasks = $this->db->query($query, $params);
         $tasks = $tasks->fetchAll();
 
-        $response = $this->response(200, '', $tasks);
+        $response = $this->responseList(200, '', $tasks);
 
         return $response;
     }
@@ -63,12 +63,40 @@ class Task extends Model
         $tasks = $this->db->query($query, $params);
         $tasks = $tasks->fetchAll();
 
-        $response = $this->response(200, '', $tasks);
+        $response = $this->responseList(200, '', $tasks);
 
         return $response;
     }
 
-    public function getTodoTaskByAssignedId($user_id)
+    public function getAssignedTaskByUserIdCount($user_id)
+    {
+        $assigned_to_id = $user_id;
+
+        $params = [
+            'assigned_to_id' => $assigned_to_id,
+            'status' => 'ASSIGNED'
+        ];
+
+        $query = '
+        SELECT COUNT(*) AS COUNT FROM task 
+        WHERE assigned_to_id = :assigned_to_id
+        AND status = :status';
+
+        $count = $this->db->query($query, $params);
+        $count = $count->fetch();
+
+        $response = $this->response(200, '', $count);
+
+        return $response;
+    }
+
+    /**
+     * Get Tasks that are Todo by Assigned to ID
+     *
+     * @param int $user_id
+     * @return void
+     */
+    public function getTodoTaskByAssignedId(int $user_id)
     {
         $assigned_to_id = $user_id;
 
@@ -85,7 +113,7 @@ class Task extends Model
         $tasks = $this->db->query($query, $params);
         $tasks = $tasks->fetchAll();
 
-        $response = $this->response(200, '', $tasks);
+        $response = $this->responseList(200, '', $tasks);
 
         return $response;
     }
@@ -144,7 +172,7 @@ class Task extends Model
 
         $message = 'Task created successfully';
 
-        $response = $this->response(201, $message);
+        $response = $this->responseList(201, $message);
 
         return $response;
     }
@@ -161,7 +189,7 @@ class Task extends Model
 
         //Check if task exists
         if (!$task) {
-            $response = $this->response(400, 'Task does not exists');
+            $response = $this->responseList(400, 'Task does not exists');
             return $response;
         }
 
@@ -175,7 +203,7 @@ class Task extends Model
 
         $message = 'Task has been deleted';
 
-        $response = $this->response(202, $message);
+        $response = $this->responseList(202, $message);
 
         return $response;
     }
@@ -201,7 +229,7 @@ class Task extends Model
 
         $message = 'Task updated successfully';
 
-        $response = $this->response(201, $message);
+        $response = $this->responseList(201, $message);
 
         return $response;
     }
