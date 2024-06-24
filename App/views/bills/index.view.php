@@ -1,7 +1,7 @@
 <?= loadPartial('header'); ?>
 
 <?= loadPartial('dashboard-header', [
-    'screen' => ['task']
+    'screen' => ['bill']
 ]) ?>
 
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
@@ -23,13 +23,13 @@
         </div>
     </div>
 
-    <h2>To Do Tasks</h2>
+    <h2>Upcoming Bills</h2>
     <div class="small m-3">
-        <?php if (count($tasks) > 0) : ?>
-            <?php foreach ($tasks as $task) : ?>
+        <?php if (count($bills) > 0) : ?>
+            <?php foreach ($bills as $bill) : ?>
                 <div class="card m-2">
                     <div class="card-body flex justify-content-between">
-                        <p><a href="/tasks/<?= $task->id ?>"> <?= $task->title ?> </a></p>
+                        <p><a href="/tasks/<?= $bill->id ?>"> <?= $bill->title ?> </a></p>
                         <p><?= $task->due_date ?></p>
                         <form method="POST" action="/tasks/complete/<?= $task->id ?>">
                             <input type="hidden" name="_method" value="PUT">
@@ -46,13 +46,13 @@
                 </div>
             <?php endforeach; ?>
         <?php else : ?>
-            <p>All Tasks are done</p>
+            <p>All bills paid</p>
         <?php endif; ?>
     </div>
 
     <br />
 
-    <h2>Completed Tasks</h2>
+    <!-- <h2>Completed Tasks</h2>
     <div class="small m-3">
         <?php foreach ($completed_tasks as $task) : ?>
             <div class="card m-2">
@@ -72,7 +72,7 @@
                 </div>
             </div>
         <?php endforeach; ?>
-    </div>
+    </div> -->
 </main>
 
 <?= loadPartial('dashboard-footer'); ?>
