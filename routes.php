@@ -1,8 +1,8 @@
 <?php
 
 $router->get('/', 'HomeController@index');
-$router->get('/auth/login', 'UserController@login');
-$router->get('/auth/register', 'UserController@create');
+$router->get('/auth/login', 'UserController@login', ['guest']);
+$router->get('/auth/register', 'UserController@create', ['guest']);
 
 $router->post('/auth/register', 'UserController@store');
 $router->get('/auth/logout', 'UserController@logout');
@@ -16,9 +16,10 @@ $router->get('/tasks/group', 'TaskController@group');
 $router->get('/tasks/create', 'TaskController@create');
 $router->get('/tasks/{id}', 'TaskController@view');
 $router->get('/tasks/group', 'TaskController@group');
-$router->post('/tasks/create', 'TaskController@store');
-$router->put('/tasks/complete/{id}', 'TaskController@complete');
-$router->delete('/tasks/delete/{id}', 'TaskController@delete');
+$router->post('/tasks/create', 'TaskController@store', ['auth']);
+$router->post('/tasks/maintain/{id}', 'TaskController@maintain', ['auth']);
+$router->put('/tasks/complete/{id}', 'TaskController@complete', ['auth']);
+$router->delete('/tasks/delete/{id}', 'TaskController@delete', ['auth']);
 
 $router->get('/user', 'UserController@index');
 $router->get('/user/profile', 'UserController@profile');

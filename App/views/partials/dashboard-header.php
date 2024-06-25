@@ -56,6 +56,11 @@
         <path d="M8 10a2 2 0 1 0 0-4 2 2 0 0 0 0 4" />
         <path d="M0 4a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V6a2 2 0 0 1-2-2z" />
     </symbol>
+    <symbol id="profile" viewBox="0 0 16 16">
+        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
+        <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
+
+    </symbol>
 </svg>
 
 <header class="navbar sticky-top bg-dark flex-md-nowrap p-0 shadow" data-bs-theme="dark">
@@ -109,14 +114,14 @@
                                 Tasks
                             </a>
                         </li>
-                        <li class="nav-item bg-light">
+                        <!-- <li class="nav-item bg-light">
                             <a class="nav-link d-flex align-items-center gap-2 <?= $data['screen'][0] === "bill" ? "bg-primary text-white" : ""; ?>" href="/bills">
                                 <svg class="bi">
                                     <use xlink:href="#cash" />
                                 </svg>
                                 Bills
                             </a>
-                        </li>
+                        </li> -->
                         <!-- <li class="nav-item">
                             <a class="nav-link d-flex align-items-center gap-2" href="#">
                                 <svg class="bi">
@@ -198,11 +203,11 @@
 
                     <ul class="nav flex-column mb-auto">
                         <li class="nav-item">
-                            <a class="nav-link d-flex align-items-center gap-2" href="#">
+                            <a class="nav-link d-flex align-items-center gap-2" <?= $data['screen'][0] === "settings" ? "bg-primary text-white" : ""; ?> href="/user/profile">
                                 <svg class="bi">
-                                    <use xlink:href="#gear-wide-connected" />
+                                    <use xlink:href="#profile" />
                                 </svg>
-                                Settings
+                                Profile
                             </a>
                         </li>
                         <li class="nav-item">

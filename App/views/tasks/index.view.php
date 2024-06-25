@@ -10,16 +10,16 @@
         <div class="btn-toolbar mb-2 mb-md-0">
             <div class="btn-group me-2">
                 <button type="button" class="btn btn-sm btn-outline-secondary bg-primary text-white" onclick="location.href='/tasks/create'">Create</button>
-                <button type="button" class="btn btn-sm btn-outline-secondary bg-primary text-white" onclick="location.href='/tasks/group'">Group</button>
-                <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
-                <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
+                <!-- <button type="button" class="btn btn-sm btn-outline-secondary bg-primary text-white" onclick="location.href='/tasks/group'">Group</button> -->
+                <!-- <button type="button" class="btn btn-sm btn-outline-secondary">Share</button> -->
+                <!-- <button type="button" class="btn btn-sm btn-outline-secondary">Export</button> -->
             </div>
-            <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle d-flex align-items-center gap-1">
+            <!-- <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle d-flex align-items-center gap-1">
                 <svg class="bi">
                     <use xlink:href="#calendar3" />
                 </svg>
                 This week
-            </button>
+            </button> -->
         </div>
     </div>
 
@@ -57,7 +57,7 @@
         <?php foreach ($completed_tasks as $task) : ?>
             <div class="card m-2">
                 <div class="card-body flex justify-content-between">
-                    <p><a href="/tasks/view/<?= $task->id ?>"> <?= $task->title ?> </a></p>
+                    <p><a href="/tasks/<?= $task->id ?>"> <?= $task->title ?> </a></p>
                     <p><?= $task->due_date ?></p>
                     <form method="POST" action="/tasks/complete/<?= $task->id ?>">
                         <input type="hidden" name="_method" value="PUT">

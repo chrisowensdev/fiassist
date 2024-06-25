@@ -30,15 +30,15 @@
         <form class="row g-3" method="POST" action="/tasks/create">
             <div class="col-md-4">
                 <label for="title" class="form-label">Title</label>
-                <input type="text" class="form-control" id="title" name="title">
+                <input type="text" class="form-control form-control-sm" id="title" name="title">
             </div>
             <div class="col-md-10">
                 <label for="description" class="form-label">Description</label>
-                <input type="text" class="form-control" id="description" name="description">
+                <input type="text" class="form-control form-control-sm" id="description" name="description">
             </div>
             <div class="col-md-3">
                 <label for="inputState" class="form-label">Frequency</label>
-                <select id="inputState" class="form-select" name="frequency">
+                <select id="inputState" class="form-select form-select-sm" name="frequency">
                     <option value="DAILY" selected>Daily</option>
                     <option value="WEEKLY">Weekly</option>
                     <option value="MONTHLY">Monthly</option>
@@ -47,14 +47,14 @@
 
             <div class="col-md-4">
                 <label for="inputState" class="form-label">Group</label>
-                <select id="inputState" class="form-select" name="user_group_id">
+                <select id="inputState" class="form-select form-select-sm" name="user_group_id">
                     <option selected value="1">Current Group</option>
                     <option>...</option>
                 </select>
             </div>
             <div class="col-md-4">
                 <label for="inputState" class="form-label">Assign</label>
-                <select id="inputState" class="form-select" name="status">
+                <select id="inputState" class="form-select form-select-sm" name="status">
                     <option selected value="INITIAL">Unassigned</option>
                     <option value="ASSIGNED">Myself</option>
                 </select>
