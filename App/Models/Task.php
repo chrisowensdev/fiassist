@@ -233,4 +233,45 @@ class Task extends Model
 
         return $response;
     }
+
+    public function maintainTask(array $params, $input)
+    {
+        $id = $params['id'];
+
+        $function = $input['function'];
+
+        if (isset($function)) {
+
+            if (strtoupper($function) === 'UPDATE') {
+            }
+        }
+
+        foreach ($input as $key => $value) {
+            inspect($key . ' = ' . $value);
+        }
+        inspectAndDie('Done');
+
+        $status = $input['status'];
+
+
+
+        $params = [
+            'id' => $id,
+            'status' => $status
+        ];
+
+        $query = "
+        UPDATE task
+        SET status = :status
+        WHERE id = :id
+        ";
+
+        $this->db->query($query, $params);
+
+        $message = 'Task updated successfully';
+
+        $response = $this->responseList(201, $message);
+
+        return $response;
+    }
 }
