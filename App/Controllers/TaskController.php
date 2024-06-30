@@ -18,16 +18,20 @@ class TaskController extends Controller
 
     public function index()
     {
-        $user = Session::get('user');
+        if (Session::has('user')) {
+            $user = Session::get('user');
 
-        $response = $this->taskModel->getTodoTaskByAssignedId($user['id']);
+            $response = $this->taskModel->getTodoTaskByAssignedId($user['id']);
 
-        $completed_tasks = $this->taskModel->getCompletedTaskByUserId($user['id']);
+            $completed_tasks = $this->taskModel->getCompletedTaskByUserId($user['id']);
 
-        loadView('tasks/index', [
-            'tasks' => $response['data'],
-            'completed_tasks' => $completed_tasks['data']
-        ]);
+            loadView('tasks/index', [
+                'tasks' => $response['data'],
+                'completed_tasks' => $completed_tasks['data']
+            ]);
+        } else {
+            redirect('/');
+        }
     }
 
     public function create()
