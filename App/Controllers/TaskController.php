@@ -109,12 +109,13 @@ class TaskController extends Controller
                 'status' => 'COMPLETE'
             ];
             $this->taskModel->maintainTask($params, $input);
+            Session::setFlashMessage('success_message', 'Task completed!');
             redirect('/tasks');
         }
 
         if ($function === 'UPDATE') {
             $this->taskModel->maintainTask($params, $input);
-
+            Session::setFlashMessage('success_message', 'Task updated!');
             redirect("/tasks/$id");
         }
     }

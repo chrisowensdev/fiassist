@@ -124,7 +124,7 @@ class UserController extends Controller
         $response = $this->userModel->getUserById($user['id']);
 
         loadView('users/profile', [
-            'data' => $response
+            'user' => $response
         ]);
     }
 
@@ -133,14 +133,20 @@ class UserController extends Controller
      * 
      * @return void
      */
-    public function updateProfile()
+    public function updateProfile($params)
     {
-        $user = Session::get('user');
+        $id = $params['id'];
+        $input = $_POST;
 
-        $response = $this->userModel->updateProfile($user['id'], $_POST);
+        $this->userModel->updateProfile($id, $input);
 
-        loadView('users/profile', [
-            'data' => $response
-        ]);
+        Session::setFlashMessage('success_message', 'User info updated successfully');
+
+        redirect('/user/profile');
+    }
+
+    public function forgotPassword()
+    {
+        loadView('users/forgotPassword');
     }
 }
