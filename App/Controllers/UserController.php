@@ -112,6 +112,8 @@ class UserController extends Controller
         ]);
     }
 
+    /**** PROFILE ****/
+
     /**
      * Get user profile
      *
@@ -148,5 +150,11 @@ class UserController extends Controller
     public function forgotPassword()
     {
         loadView('users/forgotPassword');
+    }
+
+    public function resetPasswordProfile()
+    {
+        $input = $_POST;
+        $this->userModel->resetPasswordProfile($input);
     }
 }

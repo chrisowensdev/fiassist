@@ -275,4 +275,47 @@ class User extends Model
 
         return $response;
     }
+
+
+    public function resetPasswordProfile(array $input)
+    {
+        $email = $input['email'];
+
+        $errors = [];
+        $response = [];
+
+        $user = $this->getUserByEmail($email);
+
+        if (!$user) {
+            $errors['message'] = 'Email does not exist';
+        }
+
+        if (!$errors) {
+            $recovery_id = uniqid();
+
+            $params = [
+                'user_id' => $user->id,
+                'email' => $user->email,
+                'recovery_id' => $recovery_id,
+                'status' => 'INPROG'
+            ];
+
+            $query = '
+            INSERT INTO reset_password (
+                  user_id
+                , email
+                , recovery_id
+                , status)
+            VALUES (
+                  :user_id
+                , :email
+                , :recovery_id
+                , :status)
+            ';
+
+            $this->db->query($query, $params);
+
+            $resetPasswordId = $this->db->conn->lastInsertId();
+        }
+    }
 }

@@ -7,10 +7,14 @@
         <!-- <?= loadPartial('errors', [
                     'errors' => $errors ?? []
                 ]) ?> -->
-        <form method="POST" action="/user/forgotPassword">
+        <p class="mb-3 text-center">
+            Enter your email address and you will be send an email with a link to reset your password.
+        </p>
+        <form method="POST" action="/user/profile/resetPassword">
             <div class="mb-4">
                 <input type="text" name="email" placeholder="Email Address" class="w-full px-4 py-2 border rounded focus:outline-none" />
             </div>
+
             <button type="submit" class="w-full bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded focus:outline-none">
                 Submit
             </button>
