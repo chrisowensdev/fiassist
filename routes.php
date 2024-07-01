@@ -23,7 +23,10 @@ $router->delete('/tasks/delete/{id}', 'TaskController@delete', ['auth']);
 
 $router->get('/user', 'UserController@index');
 $router->get('/user/profile', 'UserController@profile');
-$router->post('/user/profile', 'UserController@updateProfile');
+$router->post('/user/profile/resetPassword', 'UserController@resetPasswordProfile');
+$router->post('/user/profile/{id}', 'UserController@updateProfile');
+$router->get('/user/forgotPassword', 'UserController@forgotPassword');
+$router->post('/user/forgotPassword', 'UserController@resetPassword');
 
 // API
 $router->get('/api/v1/users', 'Api\\v1\\Users@index');
