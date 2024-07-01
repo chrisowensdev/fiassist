@@ -59,6 +59,7 @@ class TaskController extends Controller
 
     public function view($params)
     {
+        $user = Session::get('user');
         $mode = '';
 
         if (isset($_GET['mode'])) {
@@ -67,9 +68,12 @@ class TaskController extends Controller
 
         $response = $this->taskModel->getTaskById($params);
 
+        // inspectAndDie($response);
+
         loadView('/tasks/task', [
             'task' => $response['data'][0],
-            'mode' => $mode
+            'mode' => $mode,
+            'userId' => $user['id']
         ]);
     }
 
@@ -95,23 +99,23 @@ class TaskController extends Controller
 
         $function = strtoupper($input['function']);
 
-        // inspectAndDie($function);
-
         if ($function === 'EDIT') {
             // $response = $this->taskModel->getTaskById($params);
             redirect("/tasks/$id?mode=EDIT");
         }
 
-        if (isset($input['complete'])) {
-            // $input['status'] = 'COMPLETE';
-            // $this->taskModel->completeTask($params, $input);
-            // redirect('/tasks');
-            inspectAndDie('COMPLETE');
+        if ($function === 'COMPLETE') {
+            $input = [
+                'status' => 'COMPLETE'
+            ];
+            $this->taskModel->maintainTask($params, $input);
+            redirect('/tasks');
         }
 
-        if (isset($input['update'])) {
-            // $this->taskModel->maintainTask($params, $input);
-            inspectAndDie('UPDATE');
+        if ($function === 'UPDATE') {
+            $this->taskModel->maintainTask($params, $input);
+
+            redirect("/tasks/$id");
         }
     }
 }

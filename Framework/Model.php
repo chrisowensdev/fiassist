@@ -43,4 +43,50 @@ class Model
 
         return $response;
     }
+
+
+    /**
+     * Build out update statement dynamically from passed in values
+     *
+     * @param array $input
+     * @param integer $id
+     * @param string $table
+     * @return array
+     */
+    public function buildMaintainQuery(array $input, int $id, string $table): array
+    {
+
+        $paramString = '';
+
+        $index = 0;
+
+        $queryParams = [
+            'id' => $id
+        ];
+
+        foreach ($input as $key => $value) {
+            if ($key !== 'function') {
+                if ($index !== 0) {
+                    $paramString .= ', ';
+                }
+                $param = $key . ' = :' . $key;
+                $paramString .= $param;
+
+                $queryParams[$key] = $value;
+
+                $index++;
+            }
+        }
+
+        $query = "
+        UPDATE $table
+        SET $paramString
+        WHERE id = :id
+        ";
+
+        return [
+            'query' => $query,
+            'params' => $queryParams
+        ];
+    }
 }
