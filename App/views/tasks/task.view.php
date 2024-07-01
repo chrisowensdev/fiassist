@@ -29,18 +29,18 @@
         <form class="row g-3" method="POST" action="/tasks/maintain/<?= $task->id ?>">
             <div class="col-md-4">
                 <label for="title" class="form-label">Title</label>
-                <input type="text" class="form-control form-control-sm" id="title" name="title" value=<?= $task->title ?> <?= $mode === 'EDIT' ? '' : 'disabled' ?>>
+                <input type="text" class="form-control form-control-sm" id="title" name="title" value="<?= $task->title ?>" <?= $mode === 'EDIT' ? '' : 'disabled' ?>>
             </div>
             <div class="col-md-10">
                 <label for="description" class="form-label">Description</label>
-                <input type="text" class="form-control form-control-sm" id="description" name="description" value=<?= $task->description ?> <?= $mode === 'EDIT' ? '' : 'disabled' ?>>
+                <input type="text" class="form-control form-control-sm" id="description" name="description" value="<?= $task->description ?>" <?= $mode === 'EDIT' ? '' : 'disabled' ?>>
             </div>
             <div class="col-md-3">
                 <label for="inputState" class="form-label">Frequency</label>
                 <select id="inputState" class="form-select form-select-sm" name="frequency" <?= $mode === 'EDIT' ? '' : 'disabled' ?>>
-                    <option value="DAILY" selected>Daily</option>
-                    <option value="WEEKLY">Weekly</option>
-                    <option value="MONTHLY">Monthly</option>
+                    <option value="DAILY" <?= $task->frequency === 'DAILY' ? 'selected' : '' ?>>Daily</option>
+                    <option value="WEEKLY" <?= $task->frequency === 'WEEKLY' ? 'selected' : '' ?>>Weekly</option>
+                    <option value="MONTHLY" <?= $task->frequency === 'MONTHLY' ? 'selected' : '' ?>>Monthly</option>
                 </select>
             </div>
 
@@ -54,8 +54,8 @@
             <div class="col-md-4">
                 <label for="inputState" class="form-label">Assign</label>
                 <select id="inputState" class="form-select form-select-sm" name="status" <?= $mode === 'EDIT' ? '' : 'disabled' ?>>
-                    <option selected value="INITIAL">Unassigned</option>
-                    <option value="ASSIGNED">Myself</option>
+                    <option value="INITIAL">Unassigned</option>
+                    <option selected value="ASSIGNED">Myself</option>
                 </select>
             </div>
             <div class="col-12">
@@ -70,8 +70,12 @@
                 <?php if ($mode === 'EDIT') : ?>
                     <input type="submit" name="function" value="Update" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded focus:outline-none">
                 <?php else : ?>
-                    <input type="submit" name="function" value="Complete" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded focus:outline-none">
-                    <button type="button" name="function" onclick="location.href='/tasks/<?= $task->id; ?>?mode=EDIT'" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded focus:outline-none">Edit</button>
+                    <?php if ($task->status !== 'COMPLETE') : ?>
+                        <input type="submit" name="function" value="Complete" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded focus:outline-none">
+                    <?php endif; ?>
+                    <?php if ($userId === $task->owner_id) : ?>
+                        <button type="button" name="function" onclick="location.href='/tasks/<?= $task->id; ?>?mode=EDIT'" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded focus:outline-none">Edit</button>
+                    <?php endif; ?>
                 <?php endif; ?>
                 <!-- <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded focus:outline-none">Complete Task</button> -->
             </div>
