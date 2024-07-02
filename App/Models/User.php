@@ -291,7 +291,9 @@ class User extends Model
         }
 
         if (!$errors) {
-            $recovery_id = uniqid();
+            $bytes = openssl_random_pseudo_bytes(16);
+
+            $recovery_id = bin2hex($bytes);
 
             $params = [
                 'user_id' => $user->id,
