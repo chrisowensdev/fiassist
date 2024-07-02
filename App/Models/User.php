@@ -316,8 +316,6 @@ class User extends Model
             $this->db->query($query, $params);
 
             $resetPasswordId = $this->db->conn->lastInsertId();
-
-            inspectAndDie($resetPasswordId);
         }
     }
 }
