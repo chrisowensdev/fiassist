@@ -27,7 +27,7 @@ use Framework\Session;
     <div class="message bg-red-100 p-3 my-3 flex justify-content-between">
         <?= $errorMessage; ?>
         <a href="<?= $_SERVER['REQUEST_URI']; ?>">
-            <svg>
+            <svg class="bi">
                 <use xlink:href="#close" />
             </svg>
         </a>

@@ -47,25 +47,25 @@
                 </div>
             </div>
             <?= loadPartial('errors', [
-                'errors' => $errors ?? []
+                'errors' => $passwordErrors ?? []
             ]) ?>
 
             <div class="row g-3">
-                <form class="row g-3" method="POST" action="/user/profile/<?= $user->id ?>">
+                <form class="row g-3" method="POST" action="/user/profile/forgotPassword/<?= $user->id ?>">
                     <div class="col-12">
                         <label for="old_password" class="form-label">Old Password</label>
-                        <input type="text" class="form-control form-control-sm" id="old_password" name="old_password">
+                        <input type="password" class="form-control form-control-sm" id="old_password" name="old_password">
                     </div>
                     <div class="col-12">
                         <label for="new_password" class="form-label">New Password</label>
-                        <input type="new_password" class="form-control form-control-sm" id="new_password" name="new_password">
+                        <input type="password" class="form-control form-control-sm" id="new_password" name="new_password">
                     </div>
                     <div class="col-12">
-                        <label for="new_password_confirm" class="form-label">Confirm New</label>
-                        <input type="new_password_confirm" class="form-control form-control-sm" id="new_password_confirm" name="new_password_confirm">
+                        <label for="new_password_confirmation" class="form-label">Confirm New</label>
+                        <input type="password" class="form-control form-control-sm" id="new_password_confirmation" name="new_password_confirmation">
                     </div>
                     <div class="col-12">
-                        <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded focus:outline-none">Update</button>
+                        <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded focus:outline-none">Change Password</button>
                     </div>
                 </form>
 

@@ -72,7 +72,7 @@ class UserController extends Controller
         $params = session_get_cookie_params();
         setcookie('PHPSESSID', '', time() - 86400, $params['path'], $params['domain']);
 
-        redirect('/');
+        redirect('/auth/login');
     }
 
     /** 
@@ -147,13 +147,26 @@ class UserController extends Controller
         redirect('/user/profile');
     }
 
-    public function forgotPassword()
+
+    public function resetPassword(array $params): void
     {
-        loadView('users/forgotPassword');
+        $id = $params['id'];
+        $input = $_POST;
+
+        $response = $this->userModel->resetPassword($id, $input);
+
+        if ($response['passwordErrors']['message']) {
+            Session::setFlashMessage('error_message', $response['passwordErrors']['message']);
+        } else {
+            Session::setFlashMessage('success_message', 'Password updated successfully!');
+        }
+
+        redirect('/user/profile');
     }
 
     public function resetPasswordProfile()
     {
+        inspectAndDie('Reset Password');
         $input = $_POST;
         $this->userModel->resetPasswordProfile($input);
     }

@@ -22,11 +22,11 @@ $router->put('/tasks/complete/{id}', 'TaskController@complete', ['auth']);
 $router->delete('/tasks/delete/{id}', 'TaskController@delete', ['auth']);
 
 $router->get('/user', 'UserController@index', ['auth']);
+$router->post('/user/resetPassword', 'UserController@resetPasswordProfile');
 $router->get('/user/profile', 'UserController@profile', ['auth']);
-$router->post('/user/profile/resetPassword', 'UserController@resetPasswordProfile');
 $router->post('/user/profile/{id}', 'UserController@updateProfile', ['auth']);
-$router->get('/user/forgotPassword', 'UserController@forgotPassword');
-$router->post('/user/forgotPassword', 'UserController@resetPassword');
+// $router->get('/user/profile/forgotPassword/{id}', 'UserController@forgotPassword', ['auth']);
+$router->post('/user/profile/forgotPassword/{id}', 'UserController@resetPassword', ['auth']);
 
 // API
 $router->get('/api/v1/users', 'Api\\v1\\Users@index');

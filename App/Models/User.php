@@ -213,13 +213,13 @@ class User extends Model
     }
 
     /**
-     * Undocumented function
+     * Update users profile
      *
      * @param int $id
      * @param array $input
-     * @return void
+     * @return array
      */
-    public function updateProfile($id, array $input)
+    public function updateProfile(int $id, array $input): array
     {
         $email = $input['email'];
         $first_name = $input['first_name'];
@@ -274,6 +274,60 @@ class User extends Model
         ];
 
         return $response;
+    }
+
+    public function resetPassword(int $id, array $input)
+    {
+        $oldPassword = $input['old_password'];
+        $newPassword = $input['new_password'];
+        $newPasswordConfirmation = $input['new_password_confirmation'];
+
+        $params = [
+            'id' => $id
+        ];
+
+        $query = '
+        SELECT * FROM user
+        WHERE id = :id
+        ';
+
+        $user = $this->db->query($query, $params);
+        $user = $user->fetch();
+
+        if (!Validation::string($newPassword, 6)) {
+            $passwordErrors['message'] = 'New password must be at least 6 characters';
+        }
+
+        if (!validation::match($newPassword, $newPasswordConfirmation)) {
+            $passwordErrors['message'] = 'Passwords do not match';
+        }
+
+        if (!$user || !password_verify($oldPassword, $user->password)) {
+            $passwordErrors['message'] = 'Current password is incorrect.';
+        }
+
+        if (isset($passwordErrors)) {
+            $response = [
+                'passwordErrors' => $passwordErrors,
+                'data' => []
+            ];
+
+            return $response;
+        }
+
+        $params = [
+            'id' => $id,
+            'new_password' => password_hash($newPassword, PASSWORD_DEFAULT)
+        ];
+
+        $query = '
+        UPDATE user
+        SET   password = :new_password
+        WHERE
+              id = :id
+        ';
+
+        $this->db->query($query, $params);
     }
 
 
