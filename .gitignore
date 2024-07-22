@@ -1,6 +1,7 @@
 /vendor
 /node_modules
 /config/db.php
+/config/mail.php
 /config/db-backup.php
 .env
 .vscode
